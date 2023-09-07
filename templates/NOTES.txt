@@ -3,8 +3,7 @@
 export GITEA_HOST_URL=$(kubectl get service {{ .Release.Name }}-lab-jbook-service --namespace {{ .Release.Namespace }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
 echo http://$GITEA_HOST_URL
 
-2. Get jupyter notebook url
+2. Get jupyter notebook token running:
 
 CURRENT_POD=$(kubectl get pods -n default --no-headers -o custom-columns=":metadata.name")
 kubectl logs $CURRENT_POD
-
