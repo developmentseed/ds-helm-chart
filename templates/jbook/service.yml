@@ -1,0 +1,26 @@
+{{- if .Values.jbook.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "300"
+  name: {{ .Release.Name }}-lab-jbook-service
+  namespace: {{ .Values.namespace }}
+  labels:
+    component: lab-jbook-service
+    environment: {{ .Values.environment }}
+    release: {{ .Release.Name }}
+spec:
+  ports:
+    - port: 80
+      targetPort: 8888
+      protocol: TCP
+      name: http
+    - port: 8888
+      targetPort: http
+      protocol: TCP
+      name: https
+  type: LoadBalancer
+  selector:
+    app:  {{ .Release.Name }}-lab-jbook-app
+{{- end }}

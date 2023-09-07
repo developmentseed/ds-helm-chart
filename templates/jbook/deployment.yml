@@ -1,0 +1,44 @@
+{{- if .Values.jbook.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-lab-jbook
+  namespace: {{ .Values.namespace }}
+  labels:
+    component: lab-jbook
+    environment: {{ .Values.environment }}
+    release: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-lab-jbook-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-lab-jbook-app
+    spec:
+      containers:
+        - name: jbook
+          image: "{{ .Values.jbook.image.name }}:{{ .Values.jbook.image.tag }}"
+          # command:
+          #   - sh
+          #   - -c
+          #   - "./start"
+          ports:
+            - containerPort: 8888
+          env:
+            - name: GitSha
+              value: {{ .Values.jbook.env.GitSha }}
+          volumeMounts:
+            - name: jbook-ebs-volume
+              mountPath: {{ .Values.jbook.persistenceDisk.mountPath }}
+      volumes:
+        - name: jbook-ebs-volume
+          persistentVolumeClaim:
+            claimName:  {{ .Release.Name }}-lab-jbook-ebs-volume-clain
+      {{- if .Values.jbook.nodeSelector.enabled }}
+      nodeSelector:
+        {{ .Values.jbook.nodeSelector.label_key }} : {{ .Values.jbook.nodeSelector.label_value }}
+      {{- end }}
+{{- end }}

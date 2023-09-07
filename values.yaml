@@ -1,0 +1,28 @@
+## Namespace
+namespace: default
+environment: staging
+# Cloud provider
+cloudProvider: aws
+AWS_SSL_ARN: false
+serviceType: LoadBalancer
+
+# ====================================================
+# Jupiter-notebook App, tensorflow/tensorflow:nightly-gpu-jupyter
+# ====================================================
+jbook:
+  enabled: true
+  image:
+    name: tensorflow/tensorflow
+    # tag: nightly-gpu-jupyter
+    tag: latest-gpu-jupyter
+  env:
+    CUSTOM_ENV_VARS: xyz
+  persistenceDisk:
+    enabled: true
+    AWS_ElasticBlockStore_volumeID: vol-0ed9bd5cf54a0b4c5
+    AWS_ElasticBlockStore_size: 50Gi
+    mountPath: /tf/tensorflow-tutorials
+  nodeSelector:
+    enabled: true
+    label_key: nodegroup_type
+    label_value: gpu-ondemand-g5-xlarge
