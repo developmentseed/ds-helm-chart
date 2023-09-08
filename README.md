@@ -33,8 +33,11 @@ helm upgrade --install <relese_name> .
 # e.g: helm upgrade --install staging .
 ```
 
+# Basic kubectl commands
+
 ```sh
 kubectl get nodes -L nodegroup_type
+kubectl get pods
 ```
 
 
