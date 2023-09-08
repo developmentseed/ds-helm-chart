@@ -5,6 +5,10 @@ The ds-helm-chart repository serves as a comprehensive collection of Helm charts
 
 This project addresses the current challenge of easily accessing GPU instances and setting up a Jupyter Notebook. The aim is to create Helm charts that facilitate the easy configuration of services, allowing access to various GPUs directly from a Jupyter Notebook or for deploying other applications.
 
+
+An important point to consider is that the [cluster](https://github.com/developmentseed/ds-k8s-gpu) operates with an autoscaler. This means you don't have to worry about the cost of GPUs, as the system will automatically adjust resources. However, please note that once you've completed your work, you should remove your Helm installation to prevent unnecessary GPU resource demand.
+
+
 Before installing ds-helm-chart, it's essential to properly configure your Kubernetes cluster. Once that is done, you can proceed with the installation of the Helm chart package.
 
 Note: If you did not create the cluster yourself, you will need to request access from the cluster administrator to associate your AWS account with the cluster.
@@ -27,6 +31,10 @@ git clone https://github.com/developmentseed/ds-helm-chart.git
 cd ds-helm-chart/
 helm upgrade --install <relese_name> .
 # e.g: helm upgrade --install staging .
+```
+
+```sh
+kubectl get nodes -L nodegroup_type
 ```
 
 

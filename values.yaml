@@ -17,7 +17,7 @@ jbook:
   env:
     CUSTOM_ENV_VARS: xyz
   persistenceDisk:
-    enabled: true
+    enabled: false
     AWS_ElasticBlockStore_volumeID: vol-0ed9bd5cf54a0b4c5
     AWS_ElasticBlockStore_size: 50Gi
     mountPath: /tf/tensorflow-tutorials
