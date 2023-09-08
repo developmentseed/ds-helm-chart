@@ -30,17 +30,18 @@ spec:
           env:
             - name: GitSha
               value: {{ .Values.jbook.env.GitSha }}
-          {{- if .Values.jbook.persistenceDisk.enabled -}}
           volumeMounts:
-            - name: jbook-ebs-volume
-              mountPath: {{ .Values.jbook.persistenceDisk.mountPath }}
-          {{- end }}
-      {{- if .Values.jbook.persistenceDisk.enabled -}}
+          - name: jbook-ebs-volume
+            mountPath: {{ .Values.jbook.persistenceDisk.mountPath }}
+      restartPolicy: Always
       volumes:
         - name: jbook-ebs-volume
+        {{- if .Values.jbook.persistenceDisk.enabled }}
           persistentVolumeClaim:
-            claimName:  {{ .Release.Name }}-lab-jbook-ebs-volume-clain
-      {{- end }}
+            claimName: {{ .Release.Name }}-lab-jbook-ebs-volume-clain
+        {{- else }}
+          emptyDir: {}
+        {{- end }}
       {{- if .Values.jbook.nodeSelector.enabled }}
       nodeSelector:
         {{ .Values.jbook.nodeSelector.label_key }} : {{ .Values.jbook.nodeSelector.label_value }}
