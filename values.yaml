@@ -13,7 +13,6 @@ jbook:
   enabled: true
   image:
     name: tensorflow/tensorflow
-    # tag: nightly-gpu-jupyter
     tag: latest-gpu-jupyter
   env:
     CUSTOM_ENV_VARS: xyz
@@ -25,4 +24,4 @@ jbook:
   nodeSelector:
     enabled: true
     label_key: nodegroup_type
-    label_value: gpu-ondemand-g5-xlarge
+    label_value: g5-xlarge-ondemand
