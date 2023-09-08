@@ -21,10 +21,6 @@ spec:
       containers:
         - name: jbook
           image: "{{ .Values.jbook.image.name }}:{{ .Values.jbook.image.tag }}"
-          # command:
-          #   - sh
-          #   - -c
-          #   - "./start"
           ports:
             - containerPort: 8888
           env:
@@ -33,7 +29,6 @@ spec:
           volumeMounts:
           - name: jbook-ebs-volume
             mountPath: {{ .Values.jbook.persistenceDisk.mountPath }}
-      restartPolicy: Always
       volumes:
         - name: jbook-ebs-volume
         {{- if .Values.jbook.persistenceDisk.enabled }}
